@@ -5,8 +5,10 @@ import "./globals.css";
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   const [dark, setDark] = useState(false);
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
+    setMounted(true);
     const stored = localStorage.getItem("theme");
     const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
     const isDark = stored ? stored === "dark" : prefersDark;
@@ -28,21 +30,21 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           __html: `(function(){var t=localStorage.getItem('theme');if(!t)t=window.matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light';document.documentElement.classList.toggle('dark',t==='dark')})()`
         }} />
       </head>
-      <body className="min-h-screen antialiased">
-        <header style={{ borderBottom: "1px solid var(--border)", background: "var(--bg)" }}>
-          <div className="mx-auto flex h-14 max-w-6xl items-center justify-between px-4">
-            <Link href="/" className="text-sm font-semibold tracking-tight">AI Tools</Link>
-            <nav className="flex items-center gap-5 text-xs font-medium">
-              <Link href="/" style={{ color: "var(--fg-muted)" }} className="hover:underline">Home</Link>
-              <button onClick={toggleTheme} style={{ color: "var(--fg-muted)" }} className="hover:underline text-xs">
-                {dark ? "Light" : "Dark"}
+      <body>
+        <header style={{ borderBottom: "1px solid var(--border)", background: "var(--bg)", position: "sticky", top: 0, zIndex: 50 }}>
+          <div style={{ maxWidth: 1120, margin: "0 auto", height: 48, display: "flex", alignItems: "center", justifyContent: "space-between", padding: "0 16px" }}>
+            <Link href="/" style={{ fontSize: "0.9375rem", fontWeight: 600, letterSpacing: "-0.02em" }}>AI Tools</Link>
+            <nav style={{ display: "flex", alignItems: "center", gap: 20, fontSize: "0.8125rem" }}>
+              <Link href="/" style={{ color: "var(--fg-muted)" }}>Home</Link>
+              <button onClick={toggleTheme} style={{ color: "var(--fg-muted)", background: "none", border: "none", cursor: "pointer", padding: 0, fontSize: "0.8125rem" }}>
+                {mounted ? (dark ? "Light" : "Dark") : ""}
               </button>
             </nav>
           </div>
         </header>
         {children}
-        <footer style={{ borderTop: "1px solid var(--border)", background: "var(--bg-secondary)" }} className="py-8 text-center text-xs">
-          <p style={{ color: "var(--fg-subtle)" }}>AI Tools Directory &mdash; {new Date().getFullYear()}</p>
+        <footer style={{ borderTop: "1px solid var(--border)", background: "var(--bg-secondary)", padding: "24px 16px", textAlign: "center" }}>
+          <p style={{ fontSize: "0.75rem", color: "var(--fg-subtle)", margin: 0 }}>AI Tools Directory &mdash; {new Date().getFullYear()}</p>
         </footer>
       </body>
     </html>
