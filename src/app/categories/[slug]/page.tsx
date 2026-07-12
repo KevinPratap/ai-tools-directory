@@ -6,12 +6,13 @@ export function generateStaticParams() {
   return getAllCategories().map(cat => ({ slug: cat.slug }));
 }
 
-export default function CategoryPage({ params }: { params: { slug: string } }) {
+export default async function CategoryPage({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params;
   const allCats = getAllCategories();
-  const cat = allCats.find(c => c.slug === params.slug);
+  const cat = allCats.find(c => c.slug === slug);
   if (!cat) notFound();
 
-  const filtered = getToolsByCategory(params.slug);
+  const filtered = getToolsByCategory(slug);
 
   return (
     <main className="mx-auto max-w-6xl px-4 py-8">
