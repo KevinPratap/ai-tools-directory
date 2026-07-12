@@ -32,9 +32,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       </head>
       <body>
         <header style={{ borderBottom: "1px solid var(--border)", background: "var(--bg)", position: "sticky", top: 0, zIndex: 50 }}>
-          <div style={{ maxWidth: 1120, margin: "0 auto", height: 48, display: "flex", alignItems: "center", justifyContent: "space-between", padding: "0 16px" }}>
-            <Link href="/" style={{ fontSize: "0.9375rem", fontWeight: 600, letterSpacing: "-0.02em" }}>AI Tools</Link>
-            <nav style={{ display: "flex", alignItems: "center", gap: 20, fontSize: "0.8125rem" }}>
+          <div style={{ maxWidth: 1120, margin: "0 auto", height: 44, display: "flex", alignItems: "center", justifyContent: "space-between", padding: "0 16px" }}>
+            <Link href="/" style={{ fontSize: "0.875rem", fontWeight: 600, letterSpacing: "-0.02em" }}>AI Tools</Link>
+            <nav style={{ display: "flex", alignItems: "center", gap: 16, fontSize: "0.8125rem" }}>
               <Link href="/" style={{ color: "var(--fg-muted)" }}>Home</Link>
               <button onClick={toggleTheme} style={{ color: "var(--fg-muted)", background: "none", border: "none", cursor: "pointer", padding: 0, fontSize: "0.8125rem" }}>
                 {mounted ? (dark ? "Light" : "Dark") : ""}
@@ -43,7 +43,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           </div>
         </header>
         {children}
-        <footer style={{ borderTop: "1px solid var(--border)", background: "var(--bg-secondary)", padding: "24px 16px", textAlign: "center" }}>
+        <footer style={{ borderTop: "1px solid var(--border)", background: "var(--bg-secondary)", padding: "20px 16px", textAlign: "center" }}>
           <p style={{ fontSize: "0.75rem", color: "var(--fg-subtle)", margin: 0 }}>AI Tools Directory &mdash; {new Date().getFullYear()}</p>
         </footer>
       </body>
