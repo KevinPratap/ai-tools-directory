@@ -31011,11 +31011,35 @@
       ],
       "added": "Sep 2026",
       "alternatives": 2
+    },
+    {
+      "slug": "agent-qa",
+      "name": "Agent QA",
+      "subtitle": "Self-improving QA for web and mobile applications",
+      "pricing": "Free",
+      "category": "Software Testing",
+      "description": "The self-improving QA agent for natural-language web and mobile regression tests. It learns from past runs and adapts to UI changes. Free to run; users supply infrastructure and pay model inference costs.",
+      "full_description": "Agent QA runs natural-language tests against web and mobile applications. It builds execution memory from prior runs, recovers from UI changes, and helps teams catch regressions. The software is free to install and run; users provide their own execution infrastructure and cover model inference costs.",
+      "url": "https://vostride.com",
+      "tags": [
+        "software_testing",
+        "regression_testing",
+        "web_testing",
+        "mobile_testing",
+        "ai_agent"
+      ],
+      "professions": [
+        "QA Engineers",
+        "Web Developers",
+        "Mobile Developers"
+      ],
+      "added": "Sep 2026",
+      "alternatives": 0
     }
   ],
   "categories": [],
   "meta": {
-    "total_tools": 1236,
+    "total_tools": 1237,
     "total_categories": 0,
     "source": "bestofai.io"
   }
