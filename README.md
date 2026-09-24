@@ -1,36 +1,73 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# AI Tools Directory
 
-## Getting Started
+A static directory of **1,236 AI tools**, built with Next.js 16 (App Router) and exported
+as a static site to GitHub Pages.
 
-First, run the development server:
+Live: <https://kevinpratap.github.io/ai-tools-directory/>
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+Data is sourced from bestofai.io and lives in this repo — no API or database at runtime.
+
+## Routes
+
+| Route | What it renders |
+| --- | --- |
+| `/` | Search plus category, pricing and career-cluster filters over the full tool list |
+| `/tools/<slug>/` | Tool detail page (description, tags, pricing, alternatives, category link) |
+| `/categories/<slug>/` | Every tool in one category |
+
+Slugs are derived from the tool's `category` / `slug` fields by lowercasing and replacing
+anything that is not `a-z0-9` with `-`. Category and career-cluster counts are computed at
+runtime from the tool list, so they cannot drift out of date.
+
+## Data
+
+`src/data/tools.json` is the single source of truth:
+
+```jsonc
+{
+  "tools": [ { "slug": "01-ai", "name": "01.AI", "category": "Models", "pricing": "Free", "url": "https://01.ai", "tags": [], "professions": [] /* … */ } ],
+  "categories": [],                                  // empty on purpose, see below
+  "meta": { "total_tools": 1236, "total_categories": 0, "source": "bestofai.io" }
+}
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+The `categories` array is intentionally empty: `getAllCategories()` in `src/lib/tools.ts`
+groups the tools by their `category` field and sorts by count, so categories never need to
+be maintained by hand. The same file also maps professions onto career clusters
+(`CAREER_CLUSTERS`).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Adding a tool
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+1. Append an object to `tools` with the fields listed in the `Tool` type in `src/lib/tools.ts`.
+2. Bump `meta.total_tools` to match `tools.length` (the homepage hero prints `tools.length`).
+3. `npm run build` — a mismatch here is the usual cause of a red build.
 
-## Learn More
+## Development
 
-To learn more about Next.js, take a look at the following resources:
+```bash
+npm install
+npm run dev      # http://localhost:3000/ai-tools-directory/
+npm run build    # static export to out/
+npm run lint     # eslint
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Because `next.config.ts` sets `basePath` and `assetPrefix` to `/ai-tools-directory`, the dev
+server serves the app under that prefix, not at the site root, and `next build` writes a
+static `out/` directory (`output: "export"`, `trailingSlash: true`, unoptimized images).
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Deploy
 
-## Deploy on Vercel
+Pushing to `main` triggers `.github/workflows/deploy.yml` (Deploy to GitHub Pages): it runs
+`npm ci`, `npm run build`, uploads `out/` and deploys it to the `github-pages` environment.
+No secrets or environment variables are required.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Theming
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Light/dark is a `dark` class on `<html>`. The stored preference is applied by an inline
+script in `src/app/layout.tsx` before hydration, so the correct theme is painted on the
+first frame (`suppressHydrationWarning` on `<html>`).
+
+## Working on this repo with an AI agent
+
+See `AGENTS.md` (`CLAUDE.md` imports it): this Next.js version may differ from an agent's
+training data, so read the bundled docs in `node_modules/next/dist/docs/` before writing code.
