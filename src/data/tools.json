@@ -30983,11 +30983,39 @@
       "professions": [],
       "added": "Jun 2026",
       "alternatives": 2
+    },
+    {
+      "slug": "innercanvas",
+      "name": "InnerCanvas",
+      "subtitle": "AI-guided reflection reports from drawing tests",
+      "pricing": "Freemium",
+      "category": "Mental Health",
+      "description": "InnerCanvas turns drawing tests such as House-Tree-Person, Draw-a-Person and Person-in-the-Rain into written AI reflection reports for personal journalling. It states plainly that it is non-diagnostic and not a clinical assessment, screening or crisis-support tool. Free to try.",
+      "full_description": "InnerCanvas runs 15 guided drawing tests (House-Tree-Person, Tree, Draw-a-Person, Wartegg, DDS, K-H-T-P, Family Drawing, KFD, Couple Drawing, Bird's Nest, Person-in-the-Rain, Bridge Drawing, PPAT, Draw-a-Story, Silver Drawing Test) and returns a written reflection of what is in the picture, what may be worth reflecting on, and what it cannot prove. Private by default, non-diagnostic by design, and free to try.",
+      "url": "https://innercanvas.app",
+      "tags": [
+        "journaling",
+        "self_reflection",
+        "mental_health",
+        "wellness",
+        "drawing",
+        "art_therapy",
+        "personal_growth",
+        "non_diagnostic"
+      ],
+      "professions": [
+        "Therapists",
+        "Counselors",
+        "Psychologists",
+        "Life Coaches"
+      ],
+      "added": "Sep 2026",
+      "alternatives": 2
     }
   ],
   "categories": [],
   "meta": {
-    "total_tools": 1235,
+    "total_tools": 1236,
     "total_categories": 0,
     "source": "bestofai.io"
   }
