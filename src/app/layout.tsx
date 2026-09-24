@@ -7,13 +7,17 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   const [dark, setDark] = useState(false);
   const [mounted, setMounted] = useState(false);
 
+  // The theme only exists in the browser: the inline script above has already
+  // put the right class on <html>, so mirror it into state after first paint
+  // instead of calling setState during the effect body (which cascades a
+  // second render before the first one has painted).
   useEffect(() => {
-    setMounted(true);
-    const stored = localStorage.getItem("theme");
-    const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-    const isDark = stored ? stored === "dark" : prefersDark;
-    setDark(isDark);
-    document.documentElement.classList.toggle("dark", isDark);
+    const frame = requestAnimationFrame(() => {
+      const isDark = document.documentElement.classList.contains("dark");
+      setDark(isDark);
+      setMounted(true);
+    });
+    return () => cancelAnimationFrame(frame);
   }, []);
 
   const toggleTheme = () => {
